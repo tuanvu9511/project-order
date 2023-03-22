@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('pages.orders.orderDetailView');
+})->name('orderView');
+Route::get('/addneworder',function(){
+    return view('pages.orders.addNeworder');
+})->name('addNewOrder');
