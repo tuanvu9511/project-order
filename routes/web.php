@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\InfoCustumerController;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,3 +20,7 @@ Route::get('/', function () {
 Route::get('/addneworder',function(){
     return view('pages.orders.addNeworder');
 })->name('addNewOrder');
+Route::get('/abc',[InfoCustumerController::class,'index']);
+Route::post('/testdd',function(Request $request){
+    return $request->all();
+})->name('testdd');

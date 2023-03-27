@@ -1,7 +1,39 @@
 @extends('layouts.master')
 
+@section('css-extend')
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+@endsection
 @section('script-extend')
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+            });
+        });
+    </script>
+    <script>
+        function change_nameconsignee(){
+            var s = document.getElementById('custumerName');
+            document.getElementById('nameConsignee').value = s.value;
+        };
+        function change_consigneePhone(){
+            var a = document.getElementById('phoneNumber').value;
+            document.getElementById('consigneePhone').value = a;
+        };
+        function change_deliveryAddress(){
+            var z = document.getElementById('custumerAddress').value;
+            document.getElementById('deliveryAddress').value = z;
+        };
+        function change_rentaltime(){
+        };
+        function recal_endrental(){
+            var z = document.getElementById('timeUnit').value;
+            alert(z);
+        };
+    </script>
 @endsection
 
 @section('content')
@@ -17,7 +49,7 @@
         </div>
     </div>
     <br>
-    <form action="">
+    <form action="{{route('testdd')}}" method="POST">@csrf
    <div class="thongtinkhachhang border pt-3 pb-3 container">
         <div class="col-12 row">
             <div class="col">
@@ -25,68 +57,67 @@
             </div>
             <div class="col row">
                 <div class="col">
-                    <input type="radio" name="typeCustumer"> Khách hàng cá nhân
+                    <input type="checkbox" name="typeCustumer" checked> Khách hàng cá nhân
                 </div>
                 <div class="col">
-                    <input type="radio" name="typeCustumer"> Khách hàng doanh nghiệp
+                    <input type="checkbox" name="typeCustumer"> Khách hàng doanh nghiệp
                 </div>
             </div>
         </div>
-        <div class="col-12 row mt-3">
-            <lable class="col-2"> <i class="fa fa-users"> Tên đơn vị: </i></lable>
-            <input type="text" class="form-control col-10" >
+        <div class="col-12 row mt-3 input-group">
+            <label class="col-2"> <i class="fa fa-users"> Tên đơn vị: </i></label>
+            <input type="text" class="form-control col-10" name="companyName">
+            <button class="btn btn-outline-secondary" type="button" id="btn-danhhbakhachhang" data-bs-toggle="modal" data-bs-target="#danhhbakhachhang"><i class="fa fa-book"></i> Danh bạ</button>
         </div>
 
         <div class="col-12 row mt-3">
-            <lable class="col-2"><i class="fa fa-user">  Tên khách hàng:</i></lable>
-            <input type="text" class="form-control col-4" >
-            <lable class="col-1"><i class="fa fa-id-card"> Số CCCD:  </i></lable>
-            <input type="text" class="form-control col-2" >
+            <lable class="col-2"><i class="fa fa-user"></i>  Đại diện: <span style="color:red">*</span></lable>
+           <input type="text" class="form-control col-4" required name="custumerName" id="custumerName" onchange="change_nameconsignee()">
+            <lable class="col-1"><i class="fa fa-id-card"> </i>Số CCCD: </lable>
+            <input type="text" class="form-control col-2" name="idcard">
             <lable class="col-1"><i class="fa fa-calendar"> Cấp ngày: </i></lable>
-            <input type="text" class="form-control  col-2" >
+            <input type="text" class="form-control  col-2">
         </div>
         <div class="col-12 row mt-3">
-            <label for="" class="col-2"><i class="fa fa-phone"> Điện thoại</i> </label>
-            <input type="text" class="form-control col-10">
+            <label for="" class="col-2"><i class="fa fa-phone" > Điện thoại: <span style="color:red">*</span></i> </label>
+            <input type="text" class="form-control col-10" required name="phoneNumber" id="phoneNumber" onchange="change_consigneePhone()">
         </div>
         <div class="col-12 row mt-3">
-            <label for="" class="col-2"><i class="fa fa-location-arrow"> Địa chỉ</i></label>
-            <input type="text" class="form-control col-10">
+            <label for="" class="col-2"><i class="fa fa-location-arrow" > Địa chỉ: <span style="color:red">*</span></i></label>
+            <input type="text" class="form-control col-10" required name="custumerAddress" id="custumerAddress" onchange="change_deliveryAddress()">
         </div>
    </div>
 
    <div class="thongtinlapmay border pt-3 pb-3 container mt-3">
         <div class="col-12 row">
            <label for="" class="col-3"><h5><i class="fa fa-user"> Người nhận thiết bi</i></h5> </label> 
-           <input type="text" class="form-control col-3" readonly="">
+           <input type="text" class="form-control col-3" readonly="" name="nameConsignee" id="nameConsignee">
            <label for="" class="col-2"><h5 class="text-right"><i class="fa fa-phone"> Điện thoại</i></h5></label> 
-           <input type="text" class="form-control col-2" readonly="">
+           <input type="text" class="form-control col-2" readonly="" name="consigneePhone" id="consigneePhone">
            <div class="col-2">
-               <a href="" class="btn btn-info form-control"> <i class="fa fa-pencil-square-o" aria-hidden="true"> Thay đổi</i> </a>
+               <a href="" class="form-control"> <i class="fa fa-pencil-square-o" aria-hidden="true"> Thay đổi</i> </a>
            </div>
        </div>
        <div class="col-12 row  mt-3">
            <label for="" class="col-3"><h5><i class="fa fa-location-arrow"> Địa chỉ lắp máy</h5></i></label>
-           <input type="text" class="form-control col-7" readonly="">
-           <div class="col-2">
-               <a href="" class="btn btn-info form-control"><i class="fa fa-pencil-square-o" aria-hidden="true"> Thay đổi</i> </a>
-           </div>
+           <input type="text" class="form-control col-7" readonly="" name="deliveryAddress" id="deliveryAddress">
+          
        </div>
 
         
    </div>
 
-   <div class="thoigianthue border pt-3 pb-3 container mt-3 align-content">
+   <div class="thoigianthue border pt-3 pb-3 container mt-3 align-content" onchange="change_rentaltime()">
         <div class="col-12 row">
             <label for="" class="col-3">Thời gian thuê từ ngày</label>
-            <input type="date" class="form-control col-2">
+            <input type="date" class="form-control col-2" name="startTiem" id="startTiem">
             <label for="" class="col-1 text-center">đến</label>
-            <input type="date" class="form-control col-2">
-            <label for="" class="col-2 text-right">Đơn vị tính</label>
-            <select name="" id="" class="form-control col-2">
-                <option value="">Ngày</option>
-                <option value="">Tuần</option>
-                <option value="">Tháng</option>
+            <input type="date" class="form-control col-2" name="endTime" id="endTime">
+            <label for="" class="col-2 text-right"><div><input type="number" name="timeValue" class="form-control" min="1" value="1" onchange="recal_endrental()"></div></label>
+            <select name="timeUnit" id="timeUnit" class="form-control col-2" onchange="recal_endrental()">
+                <option value="1">Ngày</option>
+                <option value="2">Tuần</option>
+                <option value="3">Tháng</option>
             </select>
         </div>
    </div>
@@ -98,7 +129,7 @@
        <table class="table table-bordered table-hover">
            <thead class="thead-light text-center">
                <tr>
-                   <th class="col-1"><a href="" class="btn"><i class="fa fa-plus-circle"></i></a></th>
+                   <th class="col-1"><a href="#" class="btn"><i class="fa fa-plus-circle"></i></a></th>
                    <th class="col-4"><i class="fa fa-laptop"></i>Thiết bị</th>
                    <th class="col-1"><i class="fa fa-table"> </i>Số lượng</th>
                    <th class="col-2"><i class="fa fa-calendar"> </i>Thời gian</th>
@@ -163,4 +194,33 @@
        </button>
    </div>
    </form>
+
+    <div class="modal fade" id="danhhbakhachhang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="danhsachkh-modal">
+                    <table class="table table-bordered table-hover " id="example">
+                        <thead>
+                            <tr>
+                                <th style="size:10%;">TT</th>
+                                <th style="size:60%">Tên Đơn Vị</th>
+                                <th style="size:10%">Đại Diện</th>
+                                <th style="size:20%">Điện thoại</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Khách hàng cá nhân</td>
+                                <td>Ngô Tuấn Vũ</td>
+                                <td>0984131355</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
 @endsection
