@@ -42,4 +42,9 @@
         @yield('content')
     </div>
 </body>
+<style>
+  * {
+  font-family: "Times New Roman", Times, serif;
+}
+</style>
 @include('layouts.footer')
