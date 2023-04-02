@@ -12,25 +12,31 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.8.1/autoNumeric.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
             $('#example').DataTable();
             $(".datepicker").datepicker();
+            $('#DEMO').autoNumeric('init');
         });
     </script>
     <script>
         function test(){
             alert('kiểm tra ok');
+        };
+        function format_curency(a) {
+            a.value = a.value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
         }
+
     </script>
 @endsection
 
 @section('content')
 
 
-    <div class="page-head row container">
+    <div class="page-head row ">
         <div class="page-title col">
-            <h3><i class="fa fa-list"> </i> Tạo mới đơn hàng</h3>
+            <h3><i class="fa fa-list btn-secondary"> </i> Tạo mới đơn hàng</h3>
 
         </div>
         <div class="page-function col text-right">
@@ -98,84 +104,52 @@
         </div>
     </div>
   </div>
-  <div class="container border pt-3 pb-3 container mt-3">
-    <div class="thoigianthue input-group row">
-        <div class="text-left col">
-            <p><b>3. Thời gian thuê thiết bị</b></p>
-        </div>
-        <div class="col text-right">
-           <button class="btn btn-info">1 ngày</button>
-            <button class="btn btn-info">1 tuần</button>
-            <button class="btn btn-info">1 tháng</button>
-            <button class="btn btn-info">Dài hạn</button>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="text-centere"></div>
-        <p>Từ ngày: </p>
-        <input type="text" class="col-3 datepicker form-control">
-        <p>Đến ngày: </p>
-        <input type="text" class="col-3 datepicker form-control">
-    </div> 
-  </div>
-
-   
-
-   <div class="thoigianthue border pt-3 pb-3 container mt-3 align-content" onchange="change_rentaltime()">
-        <div class="col-12 row">
-            <label for="" class="col-3">Thời gian thuê từ ngày</label>
-            <input type="date" class="form-control col-2" name="startTiem" id="startTiem">
-            <label for="" class="col-1 text-center">đến</label>
-            <input type="date" class="form-control col-2" name="endTime" id="endTime">
-            <label for="" class="col-2 text-right"><div><input type="number" name="timeValue" class="form-control" min="1" value="1" onchange="recal_endrental()"></div></label>
-            <select name="timeUnit" id="timeUnit" class="form-control col-2" onchange="recal_endrental()">
-                <option value="1">Ngày</option>
-                <option value="2">Tuần</option>
-                <option value="3">Tháng</option>
-            </select>
-        </div>
-   </div>
-
-   <div class="thongtinthietbi  border pt-3 pb-3 container mt-3 align-content">
+   <div class="thongtinthietbi  border pt-3 pb-3  mt-3">
         <div class="col-12">
-            <label for=""><h5>Thông tin thiết bi</h5></label>
+            <label for=""><b>3. Thông tin thiết bị</b></label>
         </div>
-       <table class="table table-bordered table-hover">
+       <table class="table-bordered table-hover">
            <thead class="thead-light text-center">
                <tr>
-                   <th class="col-1"><a href="#" class="btn"><i class="fa fa-plus-circle"></i></a></th>
-                   <th class="col-4"><i class="fa fa-laptop"></i>Thiết bị</th>
-                   <th class="col-1"><i class="fa fa-table"> </i>Số lượng</th>
-                   <th class="col-2"><i class="fa fa-calendar"> </i>Thời gian</th>
-                   <th class="col-2"><i class="fa fa-money"> Đơn giá</i> </th>
-                   <th class="col-2"><i class="fa fa-money"> Thành tiền</i> </th>
+                   <th width="5%"><a href="#" class="btn"><i class="fa fa-plus-circle"></i></a></th>
+                   <th width="24%">Thiết bị</th>
+                   <th width="8%">Số lượng</th>
+                   <th width="8%">Thời gian</th>
+                   <th width="14%">Đơn vị</th>
+                   <th width="18%">Đơn giá </th>
+                   <th width="18%">Thành tiền </th>
                </tr>
            </thead>
            <tbody  class="text-center">
                <tr>
                    <td>1</td>
-                   <td><select name="" id="" class="form-control"></select></td>
+                   <td>
+                      <select name="" id="" class="form-control">
+                        <option value="">Cho thuê máy tính xách tay</option>   
+                        <option value="">Cho thuê case máy tính để bàn</option>   
+                        <option value="">Cho thuê màn hình máy tính</option>   
+                        <option value="">Cho thuê bộ máy tính để bàn</option>   
+                        <option value="">Cho thuê máy hủy tài liệu</option>   
+                        <option value="">Cho thuê </option>   
+                       </select>
+                   </td>
                    <td><input type="number" class="form-control"></td>
                    <td><input type="text" class="form-control"></td>
-                   <td><input type="number" class="form-control"></td>
-                   <td></td>
+                   <td><select type="text" class="form-control border-0">
+                           <option value="">Ngày</option>
+                           <option value="">Tuần</option>
+                           <option value="">Tháng</option>
+                       </select></td>
+                   <td>
+                        <input type="text" class="form-control" onChange="format_curency(this);">
+                    </td>
+                   <td>
+                       
+
+                        <input  onChange="format_curency(this);" type="text">
+                   </td>
                </tr>
            </tbody>
-           <tfoot class="text-center">
-               <tr>
-                   <td colspan="5"><b>Thành tiền trước thuế</b></td>
-                   <td></td>
-               </tr>
-                <tr>
-                   <td colspan="5"><b>VAT </b></td>
-                   <td> </td>
-               </tr>
-               <tr>
-                   <td colspan="5"><b>Tổng tiền sau thuế </b></td>
-                   <td></td>
-               </tr>
-           </tfoot>
         </table>
         <div class="col-12 row">
             <div class="col row  form-check">
