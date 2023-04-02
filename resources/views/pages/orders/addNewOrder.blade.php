@@ -1,43 +1,34 @@
 @extends('layouts.master')
 
 @section('css-extend')
- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
+
+ 
 @endsection
 @section('script-extend')
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#example').DataTable({
-            });
+            $('#example').DataTable();
+            $(".datepicker").datepicker();
         });
     </script>
     <script>
-        function change_nameconsignee(){
-            var s = document.getElementById('custumerName');
-            document.getElementById('nameConsignee').value = s.value;
-        };
-        function change_consigneePhone(){
-            var a = document.getElementById('phoneNumber').value;
-            document.getElementById('consigneePhone').value = a;
-        };
-        function change_deliveryAddress(){
-            var z = document.getElementById('custumerAddress').value;
-            document.getElementById('deliveryAddress').value = z;
-        };
-        function change_rentaltime(){
-        };
-        function recal_endrental(){
-            var z = document.getElementById('timeUnit').value;
-            alert(z);
-        };
+        function test(){
+            alert('kiểm tra ok');
+        }
     </script>
 @endsection
 
 @section('content')
-    <div class="page-head row">
+
+
+    <div class="page-head row container">
         <div class="page-title col">
             <h3><i class="fa fa-list"> </i> Tạo mới đơn hàng</h3>
 
@@ -50,62 +41,86 @@
     </div>
     <br>
     <form action="{{route('testdd')}}" method="POST">@csrf
-   <div class="thongtinkhachhang border pt-3 pb-3 container">
-        <div class="col-12 row">
-            <div class="col">
-                <h4> <i class="fa fa-address-book"></i> Thông tin khách hàng</h4>
+  <!-- @include('pages.orders.infoCustumer') -->
+  <div class="row ">
+    <div class="thontinkhachhang col">
+        <div class="infoCustumer border pt-3 pb-3 container mt-3">
+          <label><b>1. Thông tin khách hàng</b> </label>
+          <p id="infoCustumerAJAX">
+               <div class="excamplt"> 
+                    <p>
+                       - Đơn vị: <span id="nameCompany"> Công ty TNHH Thương Mại Và Phát Triển Công Nghệ Bách Khoa 4</span>
+                    </p>
+                    <p>
+                       - Mã số thuế: <span id="taxcode">0101176391</span>
+                    </p>
+
+                    <p>
+                       - Địa chỉ: <span id="address">17A Ngõ 21 Lê Văn Lương, Thanh Xuân, Hà Nôi</span>
+                    </p>
+                    <p>
+                       - Đại diện: <span id="nameCustumer">Ngô Tuấn Vũ </span>
+                    </p>
+                    <p>
+                       - Điện thoại: <span id="phoneNumber"><a href="tel:0984131355">0984 13 13 55</a></span>
+                    </p>
+               </div>
+              </p>
+            <div class="col-12 text-right">
+                <button class="btn  " type="button" onclick="test( )"><i class="fa fa-pencil"> </i> Lựa chọn mới</button>
             </div>
-            <div class="col row">
-                <div class="col">
-                    <input type="checkbox" name="typeCustumer" checked> Khách hàng cá nhân
-                </div>
-                <div class="col">
-                    <input type="checkbox" name="typeCustumer"> Khách hàng doanh nghiệp
-                </div>
+          </div>
+        </div>
+    <div class="col">
+        <div class="thongtinlapmay border pt-3 pb-3 container mt-3">
+        <label><b>2. Thông tin người nhận thiết bị</b></label>
+            <p id="infoReciver">
+                <p>
+                  - Người nhận thiết bị: <span id="reciverName">Ngô Tuấn Vũ </span>
+                </p>
+                <p>
+                  - Điện thoại: <span id="reciverPhone"><a href="tel:0984131355">0984131355</a></span>
+                </p>
+                <p>
+                  - Địa chỉ lắp đặt: <span id="revicerAddress">17A Ngõ 21 Lê Văn Lương, Thanh Xuân, Hà Nôi</span>
+                </p>
+                <p>
+                    <div class="input-group row">
+                        <span class="input-group-addon col-4" id="basic-addon1">- Ngày lắp:</span>
+                        <input type="text" class="datepicker form-control col-8 border-0" value="{{date_format(today(),'d/m/Y')}}">
+                    </div>
+                </p>
+
+            </p>
+            <div class="col-12 text-right">
+                <button class="btn" type="button" onclick="test()"><i class="fa fa-edit"> </i> thay đổi</button>
             </div>
         </div>
-        <div class="col-12 row mt-3 input-group">
-            <label class="col-2"> <i class="fa fa-users"> Tên đơn vị: </i></label>
-            <input type="text" class="form-control col-10" name="companyName">
-            <button class="btn btn-outline-secondary" type="button" id="btn-danhhbakhachhang" data-bs-toggle="modal" data-bs-target="#danhhbakhachhang"><i class="fa fa-book"></i> Danh bạ</button>
+    </div>
+  </div>
+  <div class="container border pt-3 pb-3 container mt-3">
+    <div class="thoigianthue input-group row">
+        <div class="text-left col">
+            <p><b>3. Thời gian thuê thiết bị</b></p>
         </div>
+        <div class="col text-right">
+           <button class="btn btn-info">1 ngày</button>
+            <button class="btn btn-info">1 tuần</button>
+            <button class="btn btn-info">1 tháng</button>
+            <button class="btn btn-info">Dài hạn</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="text-centere"></div>
+        <p>Từ ngày: </p>
+        <input type="text" class="col-3 datepicker form-control">
+        <p>Đến ngày: </p>
+        <input type="text" class="col-3 datepicker form-control">
+    </div> 
+  </div>
 
-        <div class="col-12 row mt-3">
-            <lable class="col-2"><i class="fa fa-user"></i>  Đại diện: <span style="color:red">*</span></lable>
-           <input type="text" class="form-control col-4" required name="custumerName" id="custumerName" onchange="change_nameconsignee()">
-            <lable class="col-1"><i class="fa fa-id-card"> </i>Số CCCD: </lable>
-            <input type="text" class="form-control col-2" name="idcard">
-            <lable class="col-1"><i class="fa fa-calendar"> Cấp ngày: </i></lable>
-            <input type="text" class="form-control  col-2">
-        </div>
-        <div class="col-12 row mt-3">
-            <label for="" class="col-2"><i class="fa fa-phone" > Điện thoại: <span style="color:red">*</span></i> </label>
-            <input type="text" class="form-control col-10" required name="phoneNumber" id="phoneNumber" onchange="change_consigneePhone()">
-        </div>
-        <div class="col-12 row mt-3">
-            <label for="" class="col-2"><i class="fa fa-location-arrow" > Địa chỉ: <span style="color:red">*</span></i></label>
-            <input type="text" class="form-control col-10" required name="custumerAddress" id="custumerAddress" onchange="change_deliveryAddress()">
-        </div>
-   </div>
-
-   <div class="thongtinlapmay border pt-3 pb-3 container mt-3">
-        <div class="col-12 row">
-           <label for="" class="col-3"><h5><i class="fa fa-user"> Người nhận thiết bi</i></h5> </label> 
-           <input type="text" class="form-control col-3" readonly="" name="nameConsignee" id="nameConsignee">
-           <label for="" class="col-2"><h5 class="text-right"><i class="fa fa-phone"> Điện thoại</i></h5></label> 
-           <input type="text" class="form-control col-2" readonly="" name="consigneePhone" id="consigneePhone">
-           <div class="col-2">
-               <a href="" class="form-control"> <i class="fa fa-pencil-square-o" aria-hidden="true"> Thay đổi</i> </a>
-           </div>
-       </div>
-       <div class="col-12 row  mt-3">
-           <label for="" class="col-3"><h5><i class="fa fa-location-arrow"> Địa chỉ lắp máy</h5></i></label>
-           <input type="text" class="form-control col-7" readonly="" name="deliveryAddress" id="deliveryAddress">
-          
-       </div>
-
-        
-   </div>
+   
 
    <div class="thoigianthue border pt-3 pb-3 container mt-3 align-content" onchange="change_rentaltime()">
         <div class="col-12 row">
@@ -223,4 +238,5 @@
         </div>
         </div>
     </div>
+
 @endsection
