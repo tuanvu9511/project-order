@@ -17,16 +17,13 @@
         $(document).ready(function () {
             $('#example').DataTable();
             $(".datepicker").datepicker();
-            $('#DEMO').autoNumeric('init');
         });
     </script>
     <script>
         function test(){
             alert('kiểm tra ok');
         };
-        function format_curency(a) {
-            a.value = a.value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-        }
+        
 
     </script>
 @endsection
@@ -46,6 +43,9 @@
         </div>
     </div>
     <br>
+    <div class="col-12">
+        Mã đơn hàng: BH1721938
+    </div>
     <form action="{{route('testdd')}}" method="POST">@csrf
   <!-- @include('pages.orders.infoCustumer') -->
   <div class="row ">
@@ -104,69 +104,7 @@
         </div>
     </div>
   </div>
-   <div class="thongtinthietbi  border pt-3 pb-3  mt-3">
-        <div class="col-12">
-            <label for=""><b>3. Thông tin thiết bị</b></label>
-        </div>
-       <table class="table-bordered table-hover">
-           <thead class="thead-light text-center">
-               <tr>
-                   <th width="5%"><a href="#" class="btn"><i class="fa fa-plus-circle"></i></a></th>
-                   <th width="24%">Thiết bị</th>
-                   <th width="8%">Số lượng</th>
-                   <th width="8%">Thời gian</th>
-                   <th width="14%">Đơn vị</th>
-                   <th width="18%">Đơn giá </th>
-                   <th width="18%">Thành tiền </th>
-               </tr>
-           </thead>
-           <tbody  class="text-center">
-               <tr>
-                   <td>1</td>
-                   <td>
-                      <select name="" id="" class="form-control">
-                        <option value="">Cho thuê máy tính xách tay</option>   
-                        <option value="">Cho thuê case máy tính để bàn</option>   
-                        <option value="">Cho thuê màn hình máy tính</option>   
-                        <option value="">Cho thuê bộ máy tính để bàn</option>   
-                        <option value="">Cho thuê máy hủy tài liệu</option>   
-                        <option value="">Cho thuê </option>   
-                       </select>
-                   </td>
-                   <td><input type="number" class="form-control"></td>
-                   <td><input type="text" class="form-control"></td>
-                   <td><select type="text" class="form-control border-0">
-                           <option value="">Ngày</option>
-                           <option value="">Tuần</option>
-                           <option value="">Tháng</option>
-                       </select></td>
-                   <td>
-                        <input type="text" class="form-control" onChange="format_curency(this);">
-                    </td>
-                   <td>
-                       
-
-                        <input  onChange="format_curency(this);" type="text">
-                   </td>
-               </tr>
-           </tbody>
-        </table>
-        <div class="col-12 row">
-            <div class="col row  form-check">
-                <input type="checkbox" id="flexCheckDefault"> <label for="flexCheckDefault"> Không lấy hóa đơn</label>
-            </div>
-            <div class="col row  form-check">
-                <input type="checkbox" checked=""> <label for=""> Miễn phí vận chuyển lắp đặt</label>
-            </div>
-             <div class="col row  form-check">
-                <input type="checkbox" checked=""> <label for="">Thanh toán sau khi kết thúc</label>
-            </div>
-             <div class="col row  form-check">
-                <input type="checkbox"> <label for="">Đặt cọc</label>
-            </div>
-            
-        </div>
-   </div>
+@include('pages.orders.infodeviceorder')
    <div class="ghichu  border pt-3 pb-3 container mt-3 align-content">
     <div class="col-12 row">
         <label for="">Ghi chú</label>
