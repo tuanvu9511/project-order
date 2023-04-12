@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InfoCustumerController;
 use Illuminate\Http\Request;
+use app\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

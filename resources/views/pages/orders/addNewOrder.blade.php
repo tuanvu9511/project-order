@@ -73,7 +73,7 @@
                </div>
               </p>
             <div class="col-12 text-right">
-                <button class="btn  " type="button" onclick="test( )"><i class="fa fa-pencil"> </i> Lựa chọn mới</button>
+                <button class="btn  " type="button" onclick="test()"><i class="fa fa-pencil"> </i> Lựa chọn mới</button>
             </div>
           </div>
         </div>
@@ -82,18 +82,28 @@
         <label><b>2. Thông tin người nhận thiết bị</b></label>
             <p id="infoReciver">
                 <p>
-                  - Người nhận thiết bị: <span id="reciverName">Ngô Tuấn Vũ </span>
+                  - Người nhận thiết bị: 
+                  <span id="TheRecipient-span">Ngô Tuấn Vũ</span>
+                  <input type="text" name="TheRecipient" id="TheRecipient" class="border-0" value="Ngô Tuấn Vũ" hidden>
                 </p>
                 <p>
-                  - Điện thoại: <span id="reciverPhone"><a href="tel:0984131355">0984131355</a></span>
+                  - Điện thoại: 
+                  <span id="ContactRecipient-span">0984131355</span>
+                  <input type="text" name="ContactRecipient" id="ContactRecipient" class="border-0" value="0984131355" hidden>
                 </p>
                 <p>
-                  - Địa chỉ lắp đặt: <span id="revicerAddress">17A Ngõ 21 Lê Văn Lương, Thanh Xuân, Hà Nôi</span>
+                  - Địa chỉ lắp đặt: 
+                  <span id="AddressRecipeint-span">17A Ngõ 21 Lê Văn Lương, Thanh Xuân, Hà Nôi</span>
+                  <input type="text" name="AddressRecipeint" id="AddressRecipeint" class="border-0 size-100" value="17A Ngõ 21 Lê Văn Lương, Thanh Xuân, Hà Nôi" hidden>
                 </p>
                 <p>
                     <div class="input-group row">
                         <span class="input-group-addon col-4" id="basic-addon1">- Ngày lắp:</span>
-                        <input type="text" class="datepicker form-control col-8 border-0" value="{{date_format(today(),'d/m/Y')}}">
+                        <input type="text" class="datepicker form-control col-8 border-0" name="setup_at" value="{{date_format(today(),'d/m/Y')}}">
+                    </div>
+                    <div class="input-group row">
+                        <span class="input-group-addon col-4" id="basic-addon1">- Tính tiền từ ngày:</span>
+                        <input type="text" class="datepicker form-control col-8 border-0" name="start_at"  value="{{date_format(today(),'d/m/Y')}}">
                     </div>
                 </p>
 
@@ -108,47 +118,13 @@
    <div class="ghichu  border pt-3 pb-3 container mt-3 align-content">
     <div class="col-12 row">
         <label for="">Ghi chú</label>
-        <textarea name=" " id="" class="form-control"></textarea>
+        <textarea name="noteForOder" id="" class="form-control"></textarea>
     </div>
        
    </div>
-   <div class="col-12 text-center mt-3">
-       <button class="btn btn-warning mr-5" onclick="#">
-           Làm mới
-       </button>
-       <button class="btn btn-primary" type="submit">
+   <div class="col-12 text-center mt-3">     <button class="btn btn-primary" type="submit">
            Đặt hàng
        </button>
    </div>
    </form>
-
-    <div class="modal fade" id="danhhbakhachhang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="danhsachkh-modal">
-                    <table class="table table-bordered table-hover " id="example">
-                        <thead>
-                            <tr>
-                                <th style="size:10%;">TT</th>
-                                <th style="size:60%">Tên Đơn Vị</th>
-                                <th style="size:10%">Đại Diện</th>
-                                <th style="size:20%">Điện thoại</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Khách hàng cá nhân</td>
-                                <td>Ngô Tuấn Vũ</td>
-                                <td>0984131355</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-
 @endsection

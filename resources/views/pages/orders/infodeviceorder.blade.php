@@ -1,7 +1,7 @@
 
 <div class="thongtinthietbi  border pt-3 pb-3  mt-3">
     <div class="col-12">
-        <label for=""><b>3. Thông tin thiết bị</b></label>
+        <label for=""><b>3. Yêu cầu thiết bị đơn hàng</b></label>
     </div>
     <table class="table-bordered" id="tabledevice">
         <thead class="thead-light text-center">
@@ -21,44 +21,51 @@
         </thead>
         <tbody  class="text-center" id="tbodytable">
             <tr onChange="total(1);" id="tr1">
-                <td>1</td>
+                <td class="">1</td>
                 <td>
-                    <select name="rentaldevice_1" id="" class="form-control">
-                        <option value="1">Cho thuê máy tính xách tay</option>   
-                        <option value="2">Cho thuê case máy tính để bàn</option>   
-                        <option value="3">Cho thuê màn hình máy tính</option>   
-                        <option value="4">Cho thuê bộ máy tính để bàn</option>   
-                        <option value="5">Cho thuê máy hủy tài liệu</option>   
-                        <option value="6">Cho thuê </option>   
-                    </select>
+                    <input type="text" class="form-control" name="yc_1" id="yc_1">
                 </td>
                 <td>
-                    <input type="text" id="sl_1" name="sl_1" class="form-control">
+                    <input type="text" id="sl_1" name="sl_1" class="form-control text-right" placeholder="0">
                 </td>
                 <td>
-                    <input type="text" id="tg_1" name="tg_1" class="form-control">
+                    <input type="text" id="tg_1" name="tg_1" class="form-control text-right" placeholder="0">
                 </td>
                 <td>
-                    <select name="unit_time_1" class="form-control border-0">
-                        <option value="date">Ngày</option>
+                    <select name="unit_time_1" class="form-control">
+                        <option value="date" selected>Ngày</option>
                         <option value="week">Tuần</option>
                         <option value="month">Tháng</option>
                     </select>
                 </td>
                 <td>
-                    <input type="text" name="unit_price_1" class="form-control" id="dg_1" >
+                    <input type="text" name="unit_price_1" class="form-control text-right" id="dg_1" placeholder="0">
                 </td>
                 <td>
-                    <input  id="tt_1" type="text" name="total_price_1" class="form-control" readonly>
+                    <input  id="tt_1" type="text" class="form-control text-right" readonly  placeholder="0">
                 </td>
-                <td><button class="btn" type="button" onclick="removeclass(1)"><i class="fa fa-remove"></i></button></td>
+                <td><button class="btn" type="button" onclick="removeclass(1)"><i class="fa fa-trash"></i></button></td>
             </tr>
         </tbody>
     </table>
+    <div class="col-12">
+        <div class="col-6 offset-6 text-right border-bottom input-group" id="totalbeforetax">
+            <div class="col-6 ">Tổng tiền trước thuế:  </div>    
+            <div class="col-6 "><input type="text" name="totalbeforetax" id="totalbeforetax-input" class="border-0 text-right" readonly></div>    
+        </div>
+        <div class="col-6 offset-6 text-right border-bottom input-group"  id="taxcost">
+            <div class="col-6 ">Thuế VAT:  </div>    
+            <div class="col-6"><input type="text" name="taxcost" id="taxcost-input" class="border-0 text-right"  readonly></div>
+        </div>
+        <div class="col-6 offset-6 text-right border-bottom input-group" id="totalaftertax">
+            <div class="col-6 ">Tổng tiền sau thuế:</div>    
+            <div class="col-6"><input type="text" name="taxcost" id="taxcost-input" class="border-0 text-right"  readonly></div>
+        </div>
+    </div>
     <div class="col-12 row">
 
         <div class="col row  form-check">
-            <input type="checkbox" id="flexCheckDefault"> <label for="flexCheckDefault"> Hóa đơn VAT</label>
+            <input type="checkbox" id="is_tax" name="is_VAT" value="0" onchange="changeistax()"> <label for="flexCheckDefault"> Hóa đơn VAT</label>
         </div>
 
         <div class="col row  form-check">
@@ -70,7 +77,7 @@
         </div>
 
         <div class="col row  form-check">
-            <input type="checkbox"> <label for="">Đặt cọc</label>
+            <input type="checkbox" name="is_deposite"> <label for="">Đặt cọc</label>
         </div>
 
     </div>
@@ -80,25 +87,36 @@
     {
         a.value = a.value.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
     };
-
+    function recal(){
+        n = parseFloat(document.getElementById('totalrow').value)+1;
+        var total = 0;
+        for(m=1;m < n; m++){
+            total = parseInt(removedot(document.getElementById('tt_'+m))) + total;
+       };
+       total = total.toString().split(".").join("").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+       document.getElementById('totalbeforetax-input').value = total;
+    }
+    function replacedot(x){
+            return x.value.split(".").join("").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        };
+    function removedot(y){
+        return y.value.split('.').join('');
+    };
     function total(i)
     {
         a = document.getElementById('tt_'+i);
         b = document.getElementById('sl_'+i);
         c = document.getElementById('tg_'+i);
         d = document.getElementById('dg_'+i);
-        function replacedot(x){
-            return x.value.split(".").join("").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-        };
-        function removedot(y){
-            return y.value.split('.').join('');
-        };
         b.value = replacedot(b);
         c.value = replacedot(c);
         d.value = replacedot(d);
         a.value = removedot(b)*removedot(c)*removedot(d);
         a.value = replacedot(a);
+        recal();
     };
+
+    
     function addRow() {
         var tableRow = document.getElementById("tabledevice");
         var t = document.getElementById("totalrow");
@@ -114,25 +132,19 @@
         t.value = Number(t.value) + 1;
         row.setAttribute("onchange","total("+t.value+")");
         row.setAttribute("id","tr"+t.value);
-         cell1.innerHTML = t.value;
-         cell2.innerHTML += '<select name="rentaldevice_'+t.value+'" id="" class="form-control">'+
-                        '<option value="">Cho thuê máy tính xách tay</option>'+   
-                        '<option value="">Cho thuê case máy tính để bàn</option>'+   
-                        '<option value="">Cho thuê màn hình máy tính</option>'+
-                        '<option value="">Cho thuê bộ máy tính để bàn</option> '+  
-                        '<option value="">Cho thuê máy hủy tài liệu</option> '+  
-                        '<option value="">Cho thuê </option>'+  
-                        '</select>';
-         cell3.innerHTML = '<input type="text" name="sl_'+t.value+'" id="sl_'+t.value+'" class="form-control">';
-         cell4.innerHTML = '<input type="text" name="tg_'+t.value+'" id="tg_'+t.value+'" class="form-control">';
-         cell5.innerHTML =  '<select name="unit_time_'+t.value+'" class="form-control border-0">'+
-                                '<option value="">Ngày</option>'+
-                                '<option value="">Tuần</option>'+
-                                '<option value="">Tháng</option>'+
+         cell1.innerHTML = tableRow.rows.length;
+         cell1.setAttribute('class','text-center');
+         cell2.innerHTML = '<input type="text" class="form-control" name="yc_'+t.value+'" id="yc_'+t.value+'">';
+         cell3.innerHTML = '<input type="text" name="sl_'+t.value+'" id="sl_'+t.value+'" class="form-control text-right" placeholder="0">';
+         cell4.innerHTML = '<input type="text" name="tg_'+t.value+'" id="tg_'+t.value+'" class="form-control text-right" placeholder="0">';
+         cell5.innerHTML =  '<select name="unit_time_'+t.value+'" class="form-control">'+
+                                '<option value="date">Ngày</option>'+
+                                '<option value="week">Tuần</option>'+
+                                '<option value="month">Tháng</option>'+
                             '</select>';
-         cell6.innerHTML = '<input type="text" name="dg_'+t.value+'" id="dg_'+t.value+'" class="form-control">';
-         cell7.innerHTML = '<input name="tt_'+t.value+'"  id="tt_'+t.value+'" type="text" class="form-control" readonly>';
-         cell8.innerHTML = '<button class="btn" type="button" onclick="removeclass('+t.value+')"><i class="fa fa-remove"></i></button>';
+         cell6.innerHTML = '<input type="text" name="dg_'+t.value+'" id="dg_'+t.value+'" class="form-control text-right" placeholder="0">';
+         cell7.innerHTML = '<input   id="tt_'+t.value+'" type="text" class="form-control text-right" readonly  placeholder="0">';
+         cell8.innerHTML = '<button class="btn" type="button" onclick="removeclass('+t.value+')"><i class="fa fa-trash"></i></button>';
          row.appendChild(cell1);
          row.appendChild(cell2);
          row.appendChild(cell3);
@@ -145,9 +157,21 @@
         };
         function removeclass(i){
             element = document.getElementById("tr"+i);
-            if(i>1){
+            table = document.getElementById("tabledevice");
+            if(table.rows.length>2){
                 element.remove();
+                for(e=1;e<table.rows.length;e++){
+                    table.rows[e].cells[0].innerHTML = e;
+                }
             }
         };
-
+        function changeistax(){
+            if(document.getElementById("is_tax").checked == false){
+                document.getElementById("taxcost").style.display = "none";
+                document.getElementById("totalaftertax").style.display = "none";
+            }else{
+                document.getElementById("taxcost").style.display = "block";
+                document.getElementById("totalaftertax").style.display = "block";
+            }
+        }
 </script>
